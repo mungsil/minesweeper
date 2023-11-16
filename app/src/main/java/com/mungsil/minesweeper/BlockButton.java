@@ -20,7 +20,7 @@ public class BlockButton extends Button {
     int neighborMines;
     static int flags=10;
     static int blocks=81;
-    
+
 
     //레이아웃 생성자 안으로 이동
     public BlockButton(Context context, int x, int y) {
@@ -52,6 +52,7 @@ public class BlockButton extends Button {
             if (flags > 0) {
                 flag = true;
                 flags -= 1;
+
                 setText("+");
             }
 

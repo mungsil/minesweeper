@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         TextView mineText = findViewById(id.mineNumText);
         Button[][] buttons = new BlockButton[9][9];
 
-        //
-
         int mine = 0;
         int width = 9;
         int height = 9;
@@ -41,52 +39,16 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 map[y][x] = -1; //지뢰 생성
 
-                /**
-                 * 지뢰 힌트 생성 시작
-                 * */
-                if ((x >= 0 && x <= width - 2) && (y >= 0 && y <= height)) {
-                    if (map[y][x + 1] != -1) {
-                        map[y][x + 1] += 1;  //center right
+                int[] nx = {-1, -1, 0, 1, 1, 1, 0, -1};
+                int[] ny = {0, 1, 1, 1, 0, -1, -1, -1};
+                for (int i = 0; i < 8; i++) {
+                    int newX = x + nx[i];
+                    int newY = y + ny[i];
+
+                    if (newX >= 0 && newX < width && newY >= 0 && newY < height && map[newY][newX] != -1) {
+                        map[newY][newX] += 1;
                     }
                 }
-                if ((x >= 1 && x <= width - 1) && (y >= 0 && y <= height - 1)) {
-                    if (map[y][x - 1] != -1) {
-                        map[y][x - 1] += 1;  // center left
-                    }
-                }
-                if ((x >= 1 && x <= width - 1) && (y >= 1 && y <= height - 1)) {
-                    if (map[y - 1][x - 1] != -1) {
-                        map[y - 1][x - 1] += 1;  // top left
-                    }
-                }
-                if ((x >= 0 && x <= width - 2) && (y >= 1 && y <= height - 1)) {
-                    if (map[y - 1][x + 1] != -1) {
-                        map[y - 1][x + 1] += 1;  // top right
-                    }
-                }
-                if ((x >= 0 && x <= width - 1) && (y >= 1 && y <= height - 1)) {
-                    if (map[y - 1][x] != -1) {
-                        map[y - 1][x] += 1;  // top center
-                    }
-                }
-                if ((x >= 0 && x <= width - 2) && (y >= 0 && y <= height - 2)) {
-                    if (map[y + 1][x + 1] != -1) {
-                        map[y + 1][x + 1] += 1; // bottom right
-                    }
-                }
-                if ((x >= 1 && x <= width - 1) && (y >= 0 && y <= height - 2)) {
-                    if (map[y + 1][x - 1] != -1) {
-                        map[y + 1][x - 1] += 1; // bottom left
-                    }
-                }
-                if ((x >= 0 && x <= width - 1) && (y >= 0 && y <= height - 2)) {
-                    if (map[y + 1][x] != -1) {
-                        map[y + 1][x] += 1; // bottom center
-                    }
-                }
-                /**
-                 * 지뢰 힌트 생성 끝
-                 * */
             }
             mine++;
         }
@@ -127,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                                                     ((BlockButton)buttons[i][j]).breakBlock();
                                                 }
                                             }
+                                            // AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                                             Toast.makeText(MainActivity.this, "게임 종료", Toast.LENGTH_SHORT).show();
                                         } else {
                                             int neighborMines = ((BlockButton) view).getNeighborMines();
@@ -147,13 +110,16 @@ public class MainActivity extends AppCompatActivity {
 
                                             }
 
-                                            //남은 블록이 없으면 WIN
-                                            if (BlockButton.blocks == 0) {
-                                                Toast.makeText(MainActivity.this, "니가이김", Toast.LENGTH_SHORT).show();
-                                            }
+
+
                                         }
                                     }
                                 }
+                                //남은 블록이 없으면 WIN
+                                    if (BlockButton.blocks == 0) {
+                                        // AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+                                        Toast.makeText(MainActivity.this, "니가이김", Toast.LENGTH_SHORT).show();
+                                    }
 
                             }
                 });
