@@ -114,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     //남은 블록이 없으면 WIN
                                     if (blocks == 0) {
+                                        for (int i = 0; i < 9; i++) {
+                                            for (int j = 0; j < 9; j++) {
+                                                buttons[i][j].setEnabled(false);
+                                            }
+                                        }
                                         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
                                         dialog.setTitle("우승");
                                         dialog.setMessage("게임 이겼어요");
